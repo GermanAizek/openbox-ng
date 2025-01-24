@@ -454,7 +454,7 @@ static void parse_key(xmlNodePtr node, GList *keylist)
     xmlNodePtr n;
     gboolean is_chroot = FALSE;
     gboolean grab = TRUE;
-    gboolean repeat = FALSE;
+    gboolean repeat = TRUE;
 
     if (!obt_xml_attr_string(node, "key", &keystring))
         return;
