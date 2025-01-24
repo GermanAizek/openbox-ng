@@ -3392,7 +3392,6 @@ void client_fullscreen(ObClient *self, gboolean fs)
         self->fullscreen == fs) return;                   /* already done */
 
     self->fullscreen = fs;
-    client_change_state(self); /* change the state hints on the client */
 
     if (fs) {
         self->pre_fullscreen_area = self->area;
@@ -3448,6 +3447,7 @@ void client_fullscreen(ObClient *self, gboolean fs)
 
     client_setup_decor_and_functions(self, FALSE);
     client_move_resize(self, x, y, w, h);
+    client_change_state(self); /* change the state hints on the client */
 
     /* and adjust our layer/stacking. do this after resizing the window,
        and applying decorations, because windows which fill the screen are
@@ -3593,10 +3593,9 @@ void client_maximize(ObClient *self, gboolean max, gint dir)
         client_find_onscreen(self, &x, &y, w, h, FALSE);
     }
 
-    client_change_state(self); /* change the state hints on the client */
-
     client_setup_decor_and_functions(self, FALSE);
     client_move_resize(self, x, y, w, h);
+    client_change_state(self); /* change the state hints on the client */
 }
 
 void client_shade(ObClient *self, gboolean shade)
