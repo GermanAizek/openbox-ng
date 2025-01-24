@@ -130,7 +130,8 @@ RrTheme* RrThemeNew(const RrInstance *inst, const gchar *name,
                     gboolean allow_fallback,
                     RrFont *active_window_font, RrFont *inactive_window_font,
                     RrFont *menu_title_font, RrFont *menu_item_font,
-                    RrFont *active_osd_font, RrFont *inactive_osd_font)
+                    RrFont *active_osd_font, RrFont *inactive_osd_font,
+                    guint min_label_height)
 {
     XrmDatabase db = NULL;
     RrJustify winjust, mtitlejust;
@@ -962,6 +963,7 @@ RrTheme* RrThemeNew(const RrInstance *inst, const gchar *name,
         RrMargins(theme->a_focused_label, &fl, &ft, &fr, &fb);
         RrMargins(theme->a_unfocused_label, &ul, &ut, &ur, &ub);
         theme->label_height = theme->win_font_height + MAX(ft + fb, ut + ub);
+        theme->label_height = MAX(theme->label_height, min_label_height);
         theme->label_height += theme->label_height % 2;
 
         /* this would be nice I think, since padding.width can now be 0,

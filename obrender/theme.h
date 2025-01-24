@@ -182,7 +182,8 @@ RrTheme* RrThemeNew(const RrInstance *inst, const gchar *theme,
                     gboolean allow_fallback,
                     RrFont *active_window_font, RrFont *inactive_window_font,
                     RrFont *menu_title_font, RrFont *menu_item_font,
-                    RrFont *active_osd_font, RrFont *inactive_osd_font);
+                    RrFont *active_osd_font, RrFont *inactive_osd_font,
+                    guint min_label_height);
 void RrThemeFree(RrTheme *theme);
 
 G_END_DECLS

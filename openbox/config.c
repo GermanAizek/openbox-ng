@@ -51,6 +51,8 @@ gchar   *config_theme;
 gboolean config_theme_keepborder;
 guint    config_theme_window_list_icon_size;
 
+guint    config_label_height;
+
 gchar   *config_title_layout;
 
 gboolean config_animate_iconify;
@@ -713,6 +715,11 @@ static void parse_theme(xmlNodePtr node, gpointer d)
         c = obt_xml_node_string(n);
         config_theme = obt_paths_expand_tilde(c);
         g_free(c);
+    }
+    if ((n = obt_xml_find_node(node, "labelHeight"))) {
+        gint d = obt_xml_node_int(n);
+        if (d > 0)
+            config_label_height = (unsigned) d;
     }
     if ((n = obt_xml_find_node(node, "titleLayout"))) {
         gchar *c, *d;
