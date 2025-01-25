@@ -28,18 +28,23 @@ dnl if backwards compatibility has been broken,
 dnl set RR_BINARY_AGE and RR_INTERFACE_AGE to 0.
 dnl if you set anything to 0, you should also bump the MINOR version.
 dnl
+dnl ymmcake note:
+dnl As I will be making changes without caring about backward compatibility,
+dnl MICRO_VERSION is set to 99 and the version won't be changed in this fork any
+dnl further.
+dnl
 RR_MAJOR_VERSION=3
 RR_MINOR_VERSION=6
-RR_MICRO_VERSION=33
-RR_INTERFACE_AGE=1
-RR_BINARY_AGE=1
+RR_MICRO_VERSION=99
+RR_INTERFACE_AGE=0
+RR_BINARY_AGE=0
 RR_VERSION=$RR_MAJOR_VERSION.$RR_MINOR_VERSION
 
 OBT_MAJOR_VERSION=3
 OBT_MINOR_VERSION=6
-OBT_MICRO_VERSION=5
-OBT_INTERFACE_AGE=3
-OBT_BINARY_AGE=3
+OBT_MICRO_VERSION=99
+OBT_INTERFACE_AGE=0
+OBT_BINARY_AGE=0
 OBT_VERSION=$OBT_MAJOR_VERSION.$OBT_MINOR_VERSION
 
 AC_SUBST(RR_MAJOR_VERSION)
