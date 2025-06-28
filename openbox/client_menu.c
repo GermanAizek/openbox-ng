@@ -216,7 +216,8 @@ static void layer_menu_execute(ObMenuEntry *e, ObMenuFrame *f,
 {
     gulong ignore_start;
 
-    g_assert(c);
+    if (!c)
+        return;
 
     if (!config_focus_under_mouse)
         ignore_start = event_start_ignore_all_enters();
@@ -288,7 +289,8 @@ static gboolean send_to_menu_update(ObMenuFrame *frame, gpointer data)
 static void send_to_menu_execute(ObMenuEntry *e, ObMenuFrame *f,
                                  ObClient *c, guint state, gpointer data)
 {
-    g_assert(c);
+    if (!c)
+        return;
 
     client_set_desktop(c, e->id, FALSE, FALSE);
     if (f && c->desktop != screen_desktop && c->desktop != DESKTOP_ALL)
