@@ -1495,8 +1495,6 @@ static void event_handle_client(ObClient *client, XEvent *e)
                 (Atom)e->xclient.data.l[2] ==
                 OBT_PROP_ATOM(NET_WM_MOVERESIZE_SIZE_RIGHT) ||
                 (Atom)e->xclient.data.l[2] ==
-                OBT_PROP_ATOM(NET_WM_MOVERESIZE_SIZE_RIGHT) ||
-                (Atom)e->xclient.data.l[2] ==
                 OBT_PROP_ATOM(NET_WM_MOVERESIZE_SIZE_BOTTOMRIGHT) ||
                 (Atom)e->xclient.data.l[2] ==
                 OBT_PROP_ATOM(NET_WM_MOVERESIZE_SIZE_BOTTOM) ||
