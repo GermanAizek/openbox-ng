@@ -25,26 +25,25 @@
 
 struct _RrInstance {
     Display *display;
-    gint screen;
-
     Visual *visual;
-    gint depth;
-    Colormap colormap;
     PangoContext *pango;
+    Colormap colormap;
+    gshort screen;
+    gshort depth;
 
-    gint red_offset;
-    gint green_offset;
-    gint blue_offset;
+    gshort red_offset;
+    gshort green_offset;
+    gshort blue_offset;
 
-    gint red_shift;
-    gint green_shift;
-    gint blue_shift;
+    gshort red_shift;
+    gshort green_shift;
+    gshort blue_shift;
 
-    gint red_mask;
-    gint green_mask;
-    gint blue_mask;
+    gshort red_mask;
+    gshort green_mask;
+    gshort blue_mask;
 
-    gint pseudo_bpc;
+    gshort pseudo_bpc;
     XColor *pseudo_colors;
 
     GHashTable *color_hash;
