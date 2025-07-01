@@ -145,28 +145,28 @@ struct _ObFrame
 
     Colormap  colormap;
 
-    gint      icon_on;    /* if the window icon button is on */
-    gint      label_on;   /* if the window title is on */
-    gint      iconify_on; /* if the window iconify button is on */
-    gint      desk_on;    /* if the window all-desktops button is on */
-    gint      shade_on;   /* if the window shade button is on */
-    gint      max_on;     /* if the window maximize button is on */
-    gint      close_on;   /* if the window close button is on */
+    gshort      icon_on;    /* if the window icon button is on */
+    gshort      label_on;   /* if the window title is on */
+    gshort      iconify_on; /* if the window iconify button is on */
+    gshort      desk_on;    /* if the window all-desktops button is on */
+    gshort      shade_on;   /* if the window shade button is on */
+    gshort      max_on;     /* if the window maximize button is on */
+    gshort      close_on;   /* if the window close button is on */
 
-    gint      width;         /* width of the titlebar and handle */
-    gint      label_width;   /* width of the label in the titlebar */
-    gint      icon_x;        /* x-position of the window icon button */
-    gint      label_x;       /* x-position of the window title */
-    gint      iconify_x;     /* x-position of the window iconify button */
-    gint      desk_x;        /* x-position of the window all-desktops button */
-    gint      shade_x;       /* x-position of the window shade button */
-    gint      max_x;         /* x-position of the window maximize button */
-    gint      close_x;       /* x-position of the window close button */
-    gint      bwidth;        /* border width */
-    gint      cbwidth_l;     /* client border width */
-    gint      cbwidth_t;     /* client border width */
-    gint      cbwidth_r;     /* client border width */
-    gint      cbwidth_b;     /* client border width */
+    gshort      width;         /* width of the titlebar and handle */
+    gshort      label_width;   /* width of the label in the titlebar */
+    gshort      icon_x;        /* x-position of the window icon button */
+    gshort      label_x;       /* x-position of the window title */
+    gshort      iconify_x;     /* x-position of the window iconify button */
+    gshort      desk_x;        /* x-position of the window all-desktops button */
+    gshort      shade_x;       /* x-position of the window shade button */
+    gshort      max_x;         /* x-position of the window maximize button */
+    gshort      close_x;       /* x-position of the window close button */
+    gshort      bwidth;        /* border width */
+    gshort      cbwidth_l;     /* client border width */
+    gshort      cbwidth_t;     /* client border width */
+    gshort      cbwidth_r;     /* client border width */
+    gshort      cbwidth_b;     /* client border width */
     gboolean  max_horz;      /* when maxed some decorations are hidden */
     gboolean  max_vert;      /* when maxed some decorations are hidden */
     gboolean  shaded;        /* decorations adjust when shaded */
