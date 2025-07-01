@@ -44,7 +44,6 @@
 
 struct _ObtPaths
 {
-    gint   ref;
     gchar  *config_home;
     gchar  *data_home;
     gchar  *cache_home;
@@ -52,10 +51,11 @@ struct _ObtPaths
     GSList *data_dirs;
     GSList *autostart_dirs;
     GSList *exec_dirs;
+    gshort   ref;
 
     uid_t   uid;
-    gid_t  *gid;
     guint   n_gid;
+    gid_t  *gid;
 };
 
 static gint slist_path_cmp(const gchar *a, const gchar *b)
