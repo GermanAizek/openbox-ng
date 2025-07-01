@@ -200,8 +200,7 @@ void client_set_list(void)
     OBT_PROP_SETA32(obt_root(ob_screen), NET_CLIENT_LIST, WINDOW,
                     (gulong*)windows, size);
 
-    if (windows)
-        g_free(windows);
+    g_free(windows);
 
     stacking_set_list();
 }
