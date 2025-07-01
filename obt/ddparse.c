@@ -532,7 +532,7 @@ static gboolean parse_file(FILE *f, ObtDDParse *parse)
         ++parse->lineno;
     }
 
-    if (buf) g_free(buf);
+    g_free(buf);
     return !error;
 }
 
