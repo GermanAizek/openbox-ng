@@ -287,7 +287,7 @@ gint main(gint argc, gchar **argv)
                                         config_font_menuitem,
                                         config_font_activeosd,
                                         config_font_inactiveosd,
-                                        config_label_height)));
+                                        config_label_height)))
                 {
                     RrThemeFree(ob_rr_theme);
                     ob_rr_theme = theme;
