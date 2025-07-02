@@ -73,7 +73,7 @@ struct _ObClient
 {
     ObWindow obwin;
     Window  window;
-    gboolean managed;
+    gchar managed;
 
     /*! If this client is managing an ObPrompt window, then this is set to the
       prompt */
@@ -83,7 +83,7 @@ struct _ObClient
     struct _ObFrame *frame;
 
     /*! The number of unmap events to ignore on the window */
-    gint ignore_unmaps;
+    gshort ignore_unmaps;
 
     /*! The id of the group the window belongs to */
     struct _ObGroup *group;
@@ -93,9 +93,9 @@ struct _ObClient
 
     /*! Whether or not the client is a transient window. It may or may not
       have parents when this is true. */
-    gboolean transient;
+    gchar transient;
     /*! Whether or not the client is transient for its group */
-    gboolean transient_for_group;
+    gchar transient_for_group;
     /*! The client which are parents of this client */
     GSList *parents;
     /*! The clients which are transients (children) of this client */
@@ -152,8 +152,8 @@ struct _ObClient
     /*! Position and size of the window prior to being fullscreened */
     Rect pre_fullscreen_area;
     /*! Remember if the window was maximized before going fullscreen */
-    gboolean pre_fullscreen_max_horz,
-             pre_fullscreen_max_vert;
+    gchar pre_fullscreen_max_horz;
+    gchar pre_fullscreen_max_vert;
 
     /*! The window's strut
       The strut defines areas of the screen that are marked off-bounds for
@@ -173,7 +173,7 @@ struct _ObClient
       The window manager will set this to 0 while the window is being managed,
       but needs to restore it afterwards, so it is saved here.
     */
-    gint border_width;
+    gushort border_width;
 
     /*! The minimum aspect ratio the client window can be sized to.
       A value of 0 means this is ignored.
@@ -208,14 +208,14 @@ struct _ObClient
 
     /*! Where to place the decorated window in relation to the undecorated
       window */
-    gint gravity;
+    gshort gravity;
 
     /*! The state of the window, one of WithdrawnState, IconicState, or
       NormalState */
     glong wmstate;
 
     /*! True if the client supports the delete_window protocol */
-    gboolean delete_window;
+    gchar delete_window;
 
     /*! Was the window's position requested by the application or the user?
       if by the application, we force it completely onscreen, if by the user
@@ -228,24 +228,24 @@ struct _ObClient
     guint sized;
 
     /*! Can the window receive input focus? */
-    gboolean can_focus;
+    gchar can_focus;
     /*! Notify the window when it receives focus? */
-    gboolean focus_notify;
+    gchar focus_notify;
 
     /*! Will the client respond to pings? */
-    gboolean ping;
+    gchar ping;
     /*! Indicates if the client is trying to close but has stopped responding
       to pings */
-    gboolean not_responding;
+    gchar not_responding;
     /*! A prompt shown when you are trying to close a client that is not
       responding.  It asks if you want to kill the client */
     struct _ObPrompt *kill_prompt;
     /*! We tried to close the window with a SIGTERM */
-    gint kill_level;
+    gshort kill_level;
 
 #ifdef SYNC
     /*! The client wants to sync during resizes */
-    gboolean sync_request;
+    gchar sync_request;
     /*! The XSync counter used for synchronizing during resizes */
     guint32 sync_counter;
     /*! The value we're waiting for the counter to reach */
@@ -253,39 +253,39 @@ struct _ObClient
 #endif
 
     /*! The window uses shape extension to be non-rectangular? */
-    gboolean shaped;
+    gchar shaped;
     /*! The window uses shape extension to have non-rectangular input? */
-    gboolean shaped_input;
+    gchar shaped_input;
 
     /*! The window is modal, so it must be processed before any windows it is
       related to can be focused */
-    gboolean modal;
+    gchar modal;
     /*! Only the window's titlebar is displayed */
-    gboolean shaded;
+    gchar shaded;
     /*! The window is iconified */
-    gboolean iconic;
+    gchar iconic;
     /*! The window is maximized to fill the screen vertically */
-    gboolean max_vert;
+    gchar max_vert;
     /*! The window is maximized to fill the screen horizontally */
-    gboolean max_horz;
+    gchar max_horz;
     /*! The window should not be displayed by pagers */
-    gboolean skip_pager;
+    gchar skip_pager;
     /*! The window should not be displayed by taskbars */
-    gboolean skip_taskbar;
+    gchar skip_taskbar;
     /*! The window is a 'fullscreen' window, and should be on top of all
       others */
-    gboolean fullscreen;
+    gchar fullscreen;
     /*! The window should be on top of other windows of the same type.
       above takes priority over below. */
-    gboolean above;
+    gchar above;
     /*! The window should be underneath other windows of the same type.
       above takes priority over below. */
-    gboolean below;
+    gchar below;
     /*! Demands attention flag */
-    gboolean demands_attention;
+    gchar demands_attention;
 
     /*! The urgent flag */
-    gboolean urgent;
+    gchar urgent;
 
     /*! The layer in which the window will be stacked, windows in lower layers
       are always below windows in higher layers. */
@@ -300,7 +300,7 @@ struct _ObClient
     /*! A user option. When this is set to TRUE the client will not ever
       be decorated.
     */
-    gboolean undecorated;
+    gchar undecorated;
 
     /*! A bitmask of values in the ObFunctions enum
       The values in the variable specify the ways in which the user is allowed
@@ -315,7 +315,7 @@ struct _ObClient
     Rect icon_geometry;
 
     /*! A boolean used for algorithms which need to mark clients as visited */
-    gboolean visited;
+    gchar visited;
 };
 
 extern GList      *client_list;
