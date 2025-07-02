@@ -124,10 +124,10 @@ static inline gint rect_manhatten_distance(Rect r, Rect o)
 }
 
 typedef struct _Strut {
-    int left;
-    int top;
-    int right;
-    int bottom;
+    short left;
+    short top;
+    short right;
+    short bottom;
 } Strut;
 
 typedef struct _StrutPartial {
