@@ -85,11 +85,6 @@ struct _ObFrame
 
     Window    window;
 
-    Strut     size;    /* the size of the frame */
-    Strut     oldsize; /* the size of the frame last told to the client */
-    Rect      area;
-    gboolean  visible;
-
     guint     functions;
     guint     decorations;
 
@@ -145,52 +140,57 @@ struct _ObFrame
 
     Colormap  colormap;
 
-    gshort      icon_on;    /* if the window icon button is on */
-    gshort      label_on;   /* if the window title is on */
-    gshort      iconify_on; /* if the window iconify button is on */
-    gshort      desk_on;    /* if the window all-desktops button is on */
-    gshort      shade_on;   /* if the window shade button is on */
-    gshort      max_on;     /* if the window maximize button is on */
-    gshort      close_on;   /* if the window close button is on */
+    Strut     size;    /* the size of the frame */
+    Strut     oldsize; /* the size of the frame last told to the client */
+    Rect      area;
+    gchar  visible;
 
-    gshort      width;         /* width of the titlebar and handle */
-    gshort      label_width;   /* width of the label in the titlebar */
-    gshort      icon_x;        /* x-position of the window icon button */
-    gshort      label_x;       /* x-position of the window title */
-    gshort      iconify_x;     /* x-position of the window iconify button */
-    gshort      desk_x;        /* x-position of the window all-desktops button */
-    gshort      shade_x;       /* x-position of the window shade button */
-    gshort      max_x;         /* x-position of the window maximize button */
-    gshort      close_x;       /* x-position of the window close button */
-    gshort      bwidth;        /* border width */
-    gshort      cbwidth_l;     /* client border width */
-    gshort      cbwidth_t;     /* client border width */
-    gshort      cbwidth_r;     /* client border width */
-    gshort      cbwidth_b;     /* client border width */
-    gboolean  max_horz;      /* when maxed some decorations are hidden */
-    gboolean  max_vert;      /* when maxed some decorations are hidden */
-    gboolean  shaded;        /* decorations adjust when shaded */
+    gchar      icon_on;    /* if the window icon button is on */
+    gchar      label_on;   /* if the window title is on */
+    gchar      iconify_on; /* if the window iconify button is on */
+    gchar      desk_on;    /* if the window all-desktops button is on */
+    gchar      shade_on;   /* if the window shade button is on */
+    gchar      max_on;     /* if the window maximize button is on */
+    gchar      close_on;   /* if the window close button is on */
+
+    gushort      width;         /* width of the titlebar and handle */
+    gushort      label_width;   /* width of the label in the titlebar */
+    gushort      icon_x;        /* x-position of the window icon button */
+    gushort      label_x;       /* x-position of the window title */
+    gushort      iconify_x;     /* x-position of the window iconify button */
+    gushort      desk_x;        /* x-position of the window all-desktops button */
+    gushort      shade_x;       /* x-position of the window shade button */
+    gushort      max_x;         /* x-position of the window maximize button */
+    gushort      close_x;       /* x-position of the window close button */
+    gushort      bwidth;        /* border width */
+    gushort      cbwidth_l;     /* client border width */
+    gushort      cbwidth_t;     /* client border width */
+    gushort      cbwidth_r;     /* client border width */
+    gushort      cbwidth_b;     /* client border width */
+    gchar  max_horz;      /* when maxed some decorations are hidden */
+    gchar  max_vert;      /* when maxed some decorations are hidden */
+    gchar  shaded;        /* decorations adjust when shaded */
 
     /* the leftmost and rightmost elements in the titlebar */
     ObFrameContext leftmost;
     ObFrameContext rightmost;
 
-    gboolean  max_press;
-    gboolean  close_press;
-    gboolean  desk_press;
-    gboolean  shade_press;
-    gboolean  iconify_press;
-    gboolean  max_hover;
-    gboolean  close_hover;
-    gboolean  desk_hover;
-    gboolean  shade_hover;
-    gboolean  iconify_hover;
+    gchar  max_press;
+    gchar  close_press;
+    gchar  desk_press;
+    gchar  shade_press;
+    gchar  iconify_press;
+    gchar  max_hover;
+    gchar  close_hover;
+    gchar  desk_hover;
+    gchar  shade_hover;
+    gchar  iconify_hover;
 
-    gboolean  focused;
-    gboolean  need_render;
+    gchar  focused;
+    gchar  need_render;
 
-    gboolean  flashing;
-    gboolean  flash_on;
+    gchar  flashing;
+    gchar  flash_on;
     GTimeVal  flash_end;
     guint     flash_timer;
 

@@ -1157,7 +1157,7 @@ static gboolean is_button_present(ObFrame *self, const gchar *lc, gint dir) {
 
 static void place_button(ObFrame *self, const char *lc, gint bwidth,
                          gint left, gint i,
-                         gint *x, gint *button_on, gint *button_x)
+                         gint *x, gchar *button_on, gushort *button_x)
 {
   if (!(*button_on = is_button_present(self, lc, i)))
     return;

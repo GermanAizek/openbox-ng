@@ -902,7 +902,7 @@ void event_leave_client(ObClient *client)
     }
 }
 
-static gboolean *context_to_button(ObFrame *f, ObFrameContext con, gboolean press)
+static gchar *context_to_button(ObFrame *f, ObFrameContext con, gboolean press)
 {
     if (press) {
         switch (con) {
@@ -981,7 +981,7 @@ static void event_handle_client(ObClient *client, XEvent *e)
 {
     Atom msgtype;
     ObFrameContext con;
-    gboolean *but;
+    gchar *but;
     static gint px = -1, py = -1;
     static guint pb = 0;
     static ObFrameContext pcon = OB_FRAME_CONTEXT_NONE;
