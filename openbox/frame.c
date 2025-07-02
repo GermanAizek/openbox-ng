@@ -1202,16 +1202,16 @@ static void layout_title(ObFrame *self)
        and -1 the second time through when working to the right */
     for (i = 1; i >= -1; i-=2) {
         gint x;
-        ObFrameContext *firstcon;
+        ObFrameContext firstcon; // 5 bit max value 0x00000
 
         if (i > 0) {
             x = left;
             lc = config_title_layout;
-            firstcon = &self->leftmost;
+            firstcon = self->leftmost;
         } else {
             x = right;
             lc = config_title_layout + strlen(config_title_layout)-1;
-            firstcon = &self->rightmost;
+            firstcon = self->rightmost;
         }
 
         /* stop at the end of the string (or the label, which calls break) */
@@ -1223,27 +1223,27 @@ static void layout_title(ObFrame *self)
                 }
                 break; /* break the for loop, do other side of label */
             } else if (*lc == 'N') {
-                if (firstcon) *firstcon = OB_FRAME_CONTEXT_ICON;
+                if (firstcon) firstcon = OB_FRAME_CONTEXT_ICON;
                 /* icon is bigger than buttons */
                 place_button(self, lc, bwidth + 2, left, i, &x, &self->icon_on, &self->icon_x);
             } else if (*lc == 'D') {
-                if (firstcon) *firstcon = OB_FRAME_CONTEXT_ALLDESKTOPS;
+                if (firstcon) firstcon = OB_FRAME_CONTEXT_ALLDESKTOPS;
                 place_button(self, lc, bwidth, left, i, &x, &self->desk_on, &self->desk_x);
             } else if (*lc == 'S') {
-                if (firstcon) *firstcon = OB_FRAME_CONTEXT_SHADE;
+                if (firstcon) firstcon = OB_FRAME_CONTEXT_SHADE;
                 place_button(self, lc, bwidth, left, i, &x, &self->shade_on, &self->shade_x);
             } else if (*lc == 'I') {
-                if (firstcon) *firstcon = OB_FRAME_CONTEXT_ICONIFY;
+                if (firstcon) firstcon = OB_FRAME_CONTEXT_ICONIFY;
                 place_button(self, lc, bwidth, left, i, &x, &self->iconify_on, &self->iconify_x);
             } else if (*lc == 'M') {
-                if (firstcon) *firstcon = OB_FRAME_CONTEXT_MAXIMIZE;
+                if (firstcon) firstcon = OB_FRAME_CONTEXT_MAXIMIZE;
                 place_button(self, lc, bwidth, left, i, &x, &self->max_on, &self->max_x);
             } else if (*lc == 'C') {
-                if (firstcon) *firstcon = OB_FRAME_CONTEXT_CLOSE;
+                if (firstcon) firstcon = OB_FRAME_CONTEXT_CLOSE;
                 place_button(self, lc, bwidth, left, i, &x, &self->close_on, &self->close_x);
             } else
                 continue; /* don't set firstcon */
-            firstcon = NULL;
+            firstcon = OB_FRAME_CONTEXT_NONE;
         }
     }
 

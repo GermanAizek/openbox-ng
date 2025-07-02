@@ -172,8 +172,8 @@ struct _ObFrame
     gchar  shaded;        /* decorations adjust when shaded */
 
     /* the leftmost and rightmost elements in the titlebar */
-    ObFrameContext leftmost;
-    ObFrameContext rightmost;
+    ObFrameContext leftmost : 5;  // 5 bit max value 0x00000
+    ObFrameContext rightmost : 5; // 5 bit max value 0x00000
 
     gchar  max_press;
     gchar  close_press;
