@@ -39,11 +39,13 @@ static ObActionsAct *interactive_act = NULL;
 static guint         interactive_initial_state = 0;
 
 struct _ObActionsDefinition {
-    guint ref;
+	gchar *name;
 
-    gchar *name;
+	guint ref;
 
-    gboolean canbeinteractive;
+    gchar canbeinteractive;
+    gchar modifies_focused_window;
+    gchar can_stop;
     union {
         ObActionsIDataSetupFunc i;
         ObActionsDataSetupFunc n;
@@ -51,8 +53,6 @@ struct _ObActionsDefinition {
     ObActionsDataFreeFunc free;
     ObActionsRunFunc run;
     ObActionsShutdownFunc shutdown;
-    gboolean modifies_focused_window;
-    gboolean can_stop;
 };
 
 struct _ObActionsAct {
