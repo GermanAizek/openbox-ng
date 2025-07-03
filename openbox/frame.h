@@ -242,13 +242,13 @@ ObFrameContext frame_context(struct _ObClient *self, Window win,
   be positioned.
   @return The proper coordinates for the frame, based on the client.
 */
-void frame_client_gravity(ObFrame *self, gint *x, gint *y);
+void frame_client_gravity(ObFrame *self, gshort *x, gshort *y);
 
 /*! Reversly applies gravity to the frame's position to find where the client
   should be positioned.
     @return The proper coordinates for the client, based on the frame.
 */
-void frame_frame_gravity(ObFrame *self, gint *x, gint *y);
+void frame_frame_gravity(ObFrame *self, gshort *x, gshort *y);
 
 /*! Convert a rectangle in client coordinates/sizes to what it would be
   for the frame, given its current decorations sizes */

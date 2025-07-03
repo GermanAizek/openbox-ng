@@ -66,7 +66,8 @@ static gboolean run_func(ObActionsData *data, gpointer options)
 
     if (data->client) {
         ObClient *c = data->client;
-        gint x, y, ow, xoff, nw, oh, yoff, nh, lw, lh;
+        gshort x, y;
+        gint ow, xoff, nw, oh, yoff, nh, lw, lh;
         gint left = o->left, right = o->right, top = o->top, bottom = o->bottom;
 
         if (o->left_denom)

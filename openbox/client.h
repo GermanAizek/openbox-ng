@@ -289,7 +289,7 @@ struct _ObClient
 
     /*! The layer in which the window will be stacked, windows in lower layers
       are always below windows in higher layers. */
-    ObStackingLayer layer;
+    ObStackingLayer layer : 4; // 4-bit max value 0x0000
 
     /*! A bitmask of values in the ObFrameDecorations enum
       The values in the variable are the decorations that the client wants to
@@ -389,13 +389,13 @@ gboolean client_focused(ObClient *self);
   for it based on its gravity:
   http://standards.freedesktop.org/wm-spec/wm-spec-1.4.html#id2512541
 */
-void client_gravity_resize_w(ObClient *self, gint *x, gint oldw, gint neww);
+void client_gravity_resize_w(ObClient *self, gshort *x, gint oldw, gint neww);
 
 /*! When the client is resized but not moved, figure out the new position
   for it based on its gravity:
   http://standards.freedesktop.org/wm-spec/wm-spec-1.4.html#id2512541
 */
-void client_gravity_resize_h(ObClient *self, gint *y, gint oldh, gint newh);
+void client_gravity_resize_h(ObClient *self, gshort *y, gint oldh, gint newh);
 
 /*! Convert a position/size from a given gravity to the client's true gravity,
   when the client is only resizing (the reference point doesn't move)
@@ -435,7 +435,7 @@ void client_convert_gravity_resize(ObClient *self, gint gravity,
               program requested change. For program requested changes, the
               constraints are not checked.
 */
-void client_try_configure(ObClient *self, gint *x, gint *y, gint *w, gint *h,
+void client_try_configure(ObClient *self, gshort *x, gshort *y, gint *w, gint *h,
                           gint *logicalw, gint *logicalh,
                           gboolean user);
 
@@ -455,7 +455,7 @@ void client_try_configure(ObClient *self, gint *x, gint *y, gint *w, gint *h,
   @param force_reply Send a ConfigureNotify to the client regardless of if
                      the position/size changed.
 */
-void client_configure(ObClient *self, gint x, gint y, gint w, gint h,
+void client_configure(ObClient *self, gshort x, gshort y, gint w, gint h,
                       gboolean user, gboolean final, gboolean force_reply);
 
 /*! Finds coordinates to keep a client on the screen.
@@ -469,7 +469,7 @@ void client_configure(ObClient *self, gint x, gint y, gint w, gint h,
               struts if possible.
   @return true if the client was moved to be on-screen; false if not.
 */
-gboolean client_find_onscreen(ObClient *self, gint *x, gint *y, gint w, gint h,
+gboolean client_find_onscreen(ObClient *self, gshort *x, gshort *y, gint w, gint h,
                               gboolean rude);
 
 /*! Moves a client so that it is on screen if it is entirely out of the
@@ -488,7 +488,7 @@ void client_find_edge_directional(ObClient *self, ObDirection dir,
                                   gint my_edge_start, gint my_edge_size,
                                   gint *dest, gboolean *near_edge);
 void client_find_move_directional(ObClient *self, ObDirection dir,
-                                  gint *x, gint *y);
+                                  gshort *x, gshort *y);
 
 typedef enum {
     CLIENT_RESIZE_GROW,
@@ -500,7 +500,7 @@ typedef enum {
 void client_find_resize_directional(ObClient *self,
                                     ObDirection side,
                                     ObClientDirectionalResizeType resize_type,
-                                    gint *x, gint *y, gint *w, gint *h);
+                                    gshort *x, gshort *y, gint *w, gint *h);
 
 /*! Fullscreen's or unfullscreen's the client window
   @param fs true if the window should be made fullscreen; false if it should

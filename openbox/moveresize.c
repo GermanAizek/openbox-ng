@@ -57,7 +57,8 @@ static gboolean moving = FALSE; /* TRUE - moving, FALSE - resizing */
 static gint start_x, start_y, start_cx, start_cy, start_cw, start_ch;
 static gboolean was_max_horz, was_max_vert;
 static Rect pre_max_area;
-static gint cur_x, cur_y, cur_w, cur_h;
+static gshort cur_x, cur_y;
+static gint cur_w, cur_h;
 static guint button;
 static guint32 corner;
 static ObDirection edge_warp_dir = -1;
@@ -390,7 +391,8 @@ static void do_move(gboolean keyboard, gint keydist)
 
 static void do_resize(void)
 {
-    gint x, y, w, h, lw, lh;
+    gshort x, y;
+	gint w, h, lw, lh;
 
     /* see if it is actually going to resize
        USE cur_x AND cur_y HERE !  Otherwise the try_configure won't know
@@ -478,7 +480,8 @@ static gboolean sync_timeout_func(gpointer data)
 static void calc_resize(gboolean keyboard, gint keydist, gint *dw, gint *dh,
                         ObDirection dir)
 {
-    gint resist, x = 0, y = 0, lw, lh, ow, oh, nw, nh;
+    gshort x = 0, y = 0;
+    gint resist, lw, lh, ow, oh, nw, nh;
     gint trydw, trydh;
 
     ow = cur_w;
@@ -682,7 +685,7 @@ static void move_with_keys(KeySym sym, guint state)
     /* shift means jump to edge */
     if (state & obt_keyboard_modkey_to_modmask(OBT_KEYBOARD_MODKEY_SHIFT))
     {
-        gint x, y;
+        gshort x, y;
         ObDirection dir;
 
         if (sym == XK_Right)
@@ -784,7 +787,8 @@ static void resize_with_keys(KeySym sym, guint state)
     /* shift means jump to edge */
     if (state & obt_keyboard_modkey_to_modmask(OBT_KEYBOARD_MODKEY_SHIFT))
     {
-        gint x, y, w, h;
+        gshort x, y;
+        gint w, h;
 
         if (sym == XK_Right)
             dir = OB_DIRECTION_EAST;

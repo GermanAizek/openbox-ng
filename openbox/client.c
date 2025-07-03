@@ -91,7 +91,7 @@ static void client_change_allowed_actions(ObClient *self);
 static void client_change_state(ObClient *self);
 static void client_change_wm_state(ObClient *self);
 static void client_apply_startup_state(ObClient *self,
-                                       gint x, gint y, gint w, gint h);
+                                       gshort x, gshort y, gint w, gint h);
 static void client_restore_session_state(ObClient *self);
 static gboolean client_restore_session_stacking(ObClient *self);
 static ObAppSettings *client_get_settings_state(ObClient *self);
@@ -1072,8 +1072,8 @@ static gboolean client_restore_session_stacking(ObClient *self)
 
 void client_move_onscreen(ObClient *self, gboolean rude)
 {
-    gint x = self->area.x;
-    gint y = self->area.y;
+    gshort x = self->area.x;
+    gshort y = self->area.y;
     if (client_find_onscreen(self, &x, &y,
                              self->area.width,
                              self->area.height, rude)) {
@@ -1081,7 +1081,7 @@ void client_move_onscreen(ObClient *self, gboolean rude)
     }
 }
 
-gboolean client_find_onscreen(ObClient *self, gint *x, gint *y, gint w, gint h,
+gboolean client_find_onscreen(ObClient *self, gshort *x, gshort *y, gint w, gint h,
                               gboolean rude)
 {
     gint ox = *x, oy = *y;
@@ -2900,7 +2900,7 @@ gboolean client_enter_focusable(ObClient *self)
 }
 
 static void client_apply_startup_state(ObClient *self,
-                                       gint x, gint y, gint w, gint h)
+                                       gshort x, gshort y, gint w, gint h)
 {
     /* save the states that we are going to apply */
     gboolean iconic = self->iconic;
@@ -2981,7 +2981,7 @@ static void client_apply_startup_state(ObClient *self,
     */
 }
 
-void client_gravity_resize_w(ObClient *self, gint *x, gint oldw, gint neww)
+void client_gravity_resize_w(ObClient *self, gshort *x, gint oldw, gint neww)
 {
     /* these should be the current values. this is for when you're not moving,
        just resizing */
@@ -3010,7 +3010,7 @@ void client_gravity_resize_w(ObClient *self, gint *x, gint oldw, gint neww)
     }
 }
 
-void client_gravity_resize_h(ObClient *self, gint *y, gint oldh, gint newh)
+void client_gravity_resize_h(ObClient *self, gshort *y, gint oldh, gint newh)
 {
     /* these should be the current values. this is for when you're not moving,
        just resizing */
@@ -3039,7 +3039,7 @@ void client_gravity_resize_h(ObClient *self, gint *y, gint oldh, gint newh)
     }
 }
 
-void client_try_configure(ObClient *self, gint *x, gint *y, gint *w, gint *h,
+void client_try_configure(ObClient *self, gshort *x, gshort *y, gint *w, gint *h,
                           gint *logicalw, gint *logicalh,
                           gboolean user)
 {
@@ -3228,7 +3228,7 @@ void client_try_configure(ObClient *self, gint *x, gint *y, gint *w, gint *h,
     g_assert(*h > 0);
 }
 
-void client_configure(ObClient *self, gint x, gint y, gint w, gint h,
+void client_configure(ObClient *self, gshort x, gshort y, gint w, gint h,
                       gboolean user, gboolean final, gboolean force_reply)
 {
     Rect oldframe, oldclient;
@@ -3385,7 +3385,8 @@ void client_configure(ObClient *self, gint x, gint y, gint w, gint h,
 
 void client_fullscreen(ObClient *self, gboolean fs)
 {
-    gint x, y, w, h;
+    gshort x, y;
+    gint w, h;
 
     if (!(self->functions & OB_CLIENT_FUNC_FULLSCREEN) || /* can't */
         self->fullscreen == fs) return;                   /* already done */
@@ -3527,7 +3528,8 @@ void client_iconify(ObClient *self, gboolean iconic, gboolean curdesk,
 
 void client_maximize(ObClient *self, gboolean max, gint dir)
 {
-    gint x, y, w, h;
+    gshort x, y;
+    gint w, h;
 
     g_assert(dir == 0 || dir == 1 || dir == 2);
     if (!(self->functions & OB_CLIENT_FUNC_MAXIMIZE) && max) return;/* can't */
@@ -4534,7 +4536,7 @@ void client_find_edge_directional(ObClient *self, ObDirection dir,
 }
 
 void client_find_move_directional(ObClient *self, ObDirection dir,
-                                  gint *x, gint *y)
+                                  gshort *x, gshort *y)
 {
     gint head, size;
     gint e, e_start, e_size;
@@ -4603,7 +4605,7 @@ void client_find_move_directional(ObClient *self, ObDirection dir,
 void client_find_resize_directional(ObClient *self,
                                     ObDirection side,
                                     ObClientDirectionalResizeType resize_type,
-                                    gint *x, gint *y, gint *w, gint *h)
+                                    gshort *x, gshort *y, gint *w, gint *h)
 {
     gint head;
     gint e, e_start, e_size, delta;

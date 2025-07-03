@@ -254,7 +254,7 @@ static Rect* choose_monitor(ObClient *c, gboolean client_to_be_foregrounded,
     return area;
 }
 
-static gboolean place_under_mouse(ObClient *client, gint *x, gint *y,
+static gboolean place_under_mouse(ObClient *client, gshort *x, gshort *y,
                                   Size frame_size)
 {
     gint l, r, t, b;
@@ -286,7 +286,7 @@ static gboolean place_under_mouse(ObClient *client, gint *x, gint *y,
 }
 
 static gboolean place_per_app_setting_position(ObClient *client, Rect *screen,
-                                               gint *x, gint *y,
+                                               gshort *x, gshort *y,
                                                ObAppSettings *settings,
                                                Size frame_size)
 {
@@ -335,7 +335,7 @@ static void place_per_app_setting_size(ObClient *client, Rect *screen,
 }
 
 static gboolean place_transient_splash(ObClient *client, Rect *area,
-                                       gint *x, gint *y, Size frame_size)
+                                       gshort *x, gshort *y, Size frame_size)
 {
     if (client->type == OB_CLIENT_TYPE_DIALOG) {
         GSList *it;
@@ -381,7 +381,7 @@ static gboolean place_transient_splash(ObClient *client, Rect *area,
     return FALSE;
 }
 
-static gboolean place_least_overlap(ObClient *c, Rect *head, int *x, int *y,
+static gboolean place_least_overlap(ObClient *c, Rect *head, short *x, short *y,
                                     Size frame_size)
 {
     /* Assemble the list of windows that could overlap with @c in the user's
@@ -473,7 +473,8 @@ gboolean place_client(ObClient *client, gboolean client_to_be_foregrounded,
 {
     gboolean ret;
     Rect *monitor_area;
-    int *x, *y, *w, *h;
+    short *x, *y;
+    int *w, *h;
     Size frame_size;
 
     monitor_area = choose_monitor(client, client_to_be_foregrounded, settings);

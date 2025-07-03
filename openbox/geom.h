@@ -39,8 +39,8 @@ typedef struct _GravityPoint {
   
 
 typedef struct _Point {
-    int x;
-    int y;
+    short x;
+    short y;
 } Point;
 
 #define POINT_SET(pt, nx, ny) (pt).x = (nx), (pt).y = (ny)
@@ -54,8 +54,8 @@ typedef struct _Size {
 #define SIZE_SET(sz, w, h) (sz).width = (w), (sz).height = (h)
 
 typedef struct _Rect {
-    int x;
-    int y;
+    short x;
+    short y;
     int width;
     int height;
 } Rect;

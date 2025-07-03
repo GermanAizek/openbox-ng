@@ -67,7 +67,7 @@ static gboolean run_func(ObActionsData *data, gpointer options)
     Options *o = options;
 
     if (data->client) {
-        gint x, y;
+        gshort x, y;
 
         client_find_move_directional(data->client, o->dir, &x, &y);
         if (x != data->client->area.x || y != data->client->area.y) {

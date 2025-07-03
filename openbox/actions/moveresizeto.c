@@ -103,7 +103,8 @@ static gboolean run_func(ObActionsData *data, gpointer options)
         Rect *area, *carea;
         ObClient *c;
         guint mon, cmon;
-        gint x, y, lw, lh, w, h;
+        gshort x, y;
+        gint lw, lh, w, h;
 
         c = data->client;
         mon = o->monitor;

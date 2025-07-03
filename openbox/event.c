@@ -1181,7 +1181,8 @@ static void event_handle_client(ObClient *client, XEvent *e)
            also you can't compress stacking events
         */
 
-        gint x, y, w, h;
+        gshort x, y;
+        gint w, h;
         gboolean move = FALSE;
         gboolean resize = FALSE;
 
@@ -1518,7 +1519,8 @@ static void event_handle_client(ObClient *client, XEvent *e)
                 if (moveresize_client)
                     moveresize_end(TRUE);
         } else if (msgtype == OBT_PROP_ATOM(NET_MOVERESIZE_WINDOW)) {
-            gint ograv, x, y, w, h;
+            gshort x, y;
+			gint ograv, w, h;
 
             ograv = client->gravity;
 
@@ -1635,7 +1637,8 @@ static void event_handle_client(ObClient *client, XEvent *e)
 
         msgtype = e->xproperty.atom;
         if (msgtype == XA_WM_NORMAL_HINTS) {
-            int x, y, w, h, lw, lh;
+            short x, y;
+            int w, h, lw, lh;
 
             ob_debug("Update NORMAL hints");
             client_update_normal_hints(client);

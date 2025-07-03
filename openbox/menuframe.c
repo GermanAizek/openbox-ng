@@ -232,7 +232,7 @@ void menu_frame_move(ObMenuFrame *self, gint x, gint y)
 }
 
 static void menu_frame_place_topmenu(ObMenuFrame *self, const GravityPoint *pos,
-                                     gint *x, gint *y, gint monitor,
+                                     gshort *x, gshort *y, gint monitor,
                                      gboolean user_positioned)
 {
     gint dx, dy;
@@ -1001,7 +1001,7 @@ gboolean menu_frame_show_topmenu(ObMenuFrame *self, const GravityPoint *pos,
                                  gboolean user_positioned)
 {
     gint px, py;
-    gint x, y;
+    gshort x, y;
 
     if (menu_frame_is_visible(self))
         return TRUE;
@@ -1011,7 +1011,7 @@ gboolean menu_frame_show_topmenu(ObMenuFrame *self, const GravityPoint *pos,
     if (self->menu->place_func) {
         x = pos->x.pos;
         y = pos->y.pos;
-        self->menu->place_func(self, &x, &y, mouse, self->menu->data);
+        self->menu->place_func(self, (int*)&x, (int*)&y, mouse, self->menu->data);
     } else {
         menu_frame_place_topmenu(self, pos, &x, &y, monitor,
                                  user_positioned);

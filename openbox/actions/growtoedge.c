@@ -98,7 +98,7 @@ static gpointer setup_shrink_func(xmlNodePtr node)
     return o;
 }
 
-static gboolean do_grow(ObActionsData *data, gint x, gint y, gint w, gint h)
+static gboolean do_grow(ObActionsData *data, gshort x, gshort y, gint w, gint h)
 {
     gint realw, realh, lw, lh;
 
@@ -126,8 +126,10 @@ static gboolean do_grow(ObActionsData *data, gint x, gint y, gint w, gint h)
 static gboolean do_grow_all_edges(ObActionsData* data,
                                   ObClientDirectionalResizeType resize_type)
 {
-    gint x, y, w, h;
-    gint temp_x, temp_y, temp_w, temp_h;
+    gshort x, y;
+    gint w, h;
+    gshort temp_x, temp_y;
+    gint temp_w, temp_h;
 
     client_find_resize_directional(data->client,
                                    OB_DIRECTION_NORTH,
@@ -212,7 +214,8 @@ static gboolean run_func(ObActionsData *data, gpointer options)
     }
 
     if (!o->shrink) {
-        gint x, y, w, h;
+        gshort x, y;
+        gint w, h;
 
         /* Try grow. */
         client_find_resize_directional(data->client,
@@ -231,7 +234,8 @@ static gboolean run_func(ObActionsData *data, gpointer options)
           (o->dir == OB_DIRECTION_EAST ? OB_DIRECTION_WEST :
            OB_DIRECTION_EAST)));
 
-    gint x, y, w, h;
+    gshort x, y;
+    gint w, h;
     gint half;
 
     client_find_resize_directional(data->client,

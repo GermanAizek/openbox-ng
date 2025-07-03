@@ -29,7 +29,7 @@
 
 static gboolean resist_move_window(Rect window,
                                    Rect target, gint resist,
-                                   gint *x, gint *y)
+                                   gshort *x, gshort *y)
 {
     gint l, t, r, b; /* requested edges */
     gint cl, ct, cr, cb; /* current edges */
@@ -99,7 +99,7 @@ static gboolean resist_move_window(Rect window,
     return snapx && snapy;
 }
 
-void resist_move_windows(ObClient *c, gint resist, gint *x, gint *y)
+void resist_move_windows(ObClient *c, gint resist, gshort *x, gshort *y)
 {
     GList *it;
     Rect dock_area;
@@ -133,7 +133,7 @@ void resist_move_windows(ObClient *c, gint resist, gint *x, gint *y)
     frame_frame_gravity(c->frame, x, y);
 }
 
-void resist_move_monitors(ObClient *c, gint resist, gint *x, gint *y)
+void resist_move_monitors(ObClient *c, gint resist, gshort *x, gshort *y)
 {
     Rect *area;
     const Rect *parea;

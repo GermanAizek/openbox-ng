@@ -1526,7 +1526,7 @@ ObFrameContext frame_context(ObClient *client, Window win, gint x, gint y)
     return OB_FRAME_CONTEXT_NONE;
 }
 
-void frame_client_gravity(ObFrame *self, gint *x, gint *y)
+void frame_client_gravity(ObFrame *self, gshort *x, gshort *y)
 {
     /* horizontal */
     switch (self->client->gravity) {
@@ -1589,7 +1589,7 @@ void frame_client_gravity(ObFrame *self, gint *x, gint *y)
     }
 }
 
-void frame_frame_gravity(ObFrame *self, gint *x, gint *y)
+void frame_frame_gravity(ObFrame *self, gshort *x, gshort *y)
 {
     /* horizontal */
     switch (self->client->gravity) {
