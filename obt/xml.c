@@ -42,14 +42,14 @@ struct Callback {
 };
 
 struct _ObtXmlInst {
-    gint ref;
     ObtPaths *xdg_paths;
     GHashTable *callbacks;
     xmlDocPtr doc;
     xmlNodePtr root;
     gchar *path;
-    gchar *last_error_file;
+    gint ref;
     gint last_error_line;
+    gchar *last_error_file;
     gchar *last_error_message;
 };
 
