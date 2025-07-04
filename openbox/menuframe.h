@@ -60,30 +60,30 @@ struct _ObMenuFrame
     guint show_from;
 
     /* If the submenus are being drawn to the right or the left */
-    gboolean direction_right;
+    gchar direction_right;
 
     /* On-screen area (including borders!) */
     Rect area;
     Strut item_margin;
-    gint inner_w; /* inside the borders */
-    gint item_h;  /* height of all normal items */
-    gint text_x;  /* offset at which the text appears in the items */
-    gint text_w;  /* width of the text area in the items */
-    gint text_h;  /* height of the items */
+    gshort inner_w; /* inside the borders */
+    gshort item_h;  /* height of all normal items */
+    gshort text_x;  /* offset at which the text appears in the items */
+    gshort text_w;  /* width of the text area in the items */
+    gshort text_h;  /* height of the items */
 
-    gint monitor; /* monitor on which to show the menu in xinerama */
+    gshort monitor; /* monitor on which to show the menu in xinerama */
 
     /* We make a copy of this for each menu, so that we don't have to re-render
        the background of the entire menu each time we render an item inside it.
     */
     RrAppearance *a_items;
 
-    gboolean got_press; /* don't allow a KeyRelease event to run things in the
+    gchar got_press; /* don't allow a KeyRelease event to run things in the
                            menu until it has seen a KeyPress.  this is to
                            avoid having the keybinding used to show the menu
                            end up running something inside the menu */
     guint press_keycode; /* the KeyCode that was used in the last KeyPress */
-    gboolean press_doexec; /* if the upcoming KeyRelease should be used to
+    gchar press_doexec; /* if the upcoming KeyRelease should be used to
                               execute the menu item that was selected by the
                               KeyPress */
 };
