@@ -33,7 +33,7 @@ typedef struct _ObDockApp ObDockApp;
 
 struct _ObDock
 {
-    ObWindow obwin;
+    enum ObWindow obwin;
 
     Window frame;
     RrAppearance *a_frame;

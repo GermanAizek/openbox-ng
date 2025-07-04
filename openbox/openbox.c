@@ -336,7 +336,7 @@ gint main(gint argc, gchar **argv)
                 xqueue_listen();
 
                 guint32 xid;
-                ObWindow *w;
+                enum ObWindow *w;
 
                 /* get all the existing windows */
                 window_manage_all();

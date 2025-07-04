@@ -71,7 +71,7 @@ typedef enum
 
 struct _ObClient
 {
-    ObWindow obwin;
+    enum ObWindow obwin;
     Window  window;
     gchar managed;
 

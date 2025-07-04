@@ -35,7 +35,7 @@ typedef struct _ObPagerPopup ObPagerPopup;
 
 struct _ObPopup
 {
-    ObWindow obwin;
+    enum ObWindow obwin;
     Window bg;
 
     Window text;

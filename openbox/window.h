@@ -24,33 +24,35 @@
 #include <X11/Xlib.h>
 #include <glib.h>
 
-typedef struct _ObWindow         ObWindow;
+// Optimize memory placement, replaced struct _ObWindow to enum ObWindowClass
+// typedef struct _ObWindow         ObWindow;
 typedef struct _ObInternalWindow ObInternalWindow;
 
-typedef enum {
+typedef enum ObWindow {
     OB_WINDOW_CLASS_MENUFRAME,
     OB_WINDOW_CLASS_DOCK,
     OB_WINDOW_CLASS_CLIENT,
     OB_WINDOW_CLASS_INTERNAL,
     OB_WINDOW_CLASS_PROMPT
-} ObWindowClass;
+}; // ObWindowClass
 
 /* In order to be an ObWindow, you need to make this struct the top of your
    struct */
-struct _ObWindow {
-    ObWindowClass type;
-};
+// Optimize memory placement, replaced struct _ObWindow to enum ObWindowClass
+// struct _ObWindow {
+//     ObWindowClass type;
+// };
 
 #define WINDOW_IS_MENUFRAME(win) \
-    (((ObWindow*)win)->type == OB_WINDOW_CLASS_MENUFRAME)
+    ((enum ObWindow*)win == OB_WINDOW_CLASS_MENUFRAME)
 #define WINDOW_IS_DOCK(win) \
-    (((ObWindow*)win)->type == OB_WINDOW_CLASS_DOCK)
+    ((enum ObWindow*)win == OB_WINDOW_CLASS_DOCK)
 #define WINDOW_IS_CLIENT(win) \
-    (((ObWindow*)win)->type == OB_WINDOW_CLASS_CLIENT)
+    ((enum ObWindow*)win == OB_WINDOW_CLASS_CLIENT)
 #define WINDOW_IS_INTERNAL(win) \
-    (((ObWindow*)win)->type == OB_WINDOW_CLASS_INTERNAL)
+    ((enum ObWindow*)win == OB_WINDOW_CLASS_INTERNAL)
 #define WINDOW_IS_PROMPT(win) \
-    (((ObWindow*)win)->type == OB_WINDOW_CLASS_PROMPT)
+    ((enum ObWindow*)win == OB_WINDOW_CLASS_PROMPT)
 
 struct _ObMenu;
 struct _ObDock;
@@ -64,25 +66,25 @@ struct _ObPrompt;
 #define WINDOW_AS_INTERNAL(win) ((struct _ObInternalWindow*)win)
 #define WINDOW_AS_PROMPT(win) ((struct _ObPrompt*)win)
 
-#define MENUFRAME_AS_WINDOW(menu) ((ObWindow*)menu)
-#define DOCK_AS_WINDOW(dock) ((ObWindow*)dock)
-#define CLIENT_AS_WINDOW(client) ((ObWindow*)client)
-#define INTERNAL_AS_WINDOW(intern) ((ObWindow*)intern)
-#define PROMPT_AS_WINDOW(prompt) ((ObWindow*)prompt)
+#define MENUFRAME_AS_WINDOW(menu) ((enum ObWindow*)menu)
+#define DOCK_AS_WINDOW(dock) ((enum ObWindow*)dock)
+#define CLIENT_AS_WINDOW(client) ((enum ObWindow*)client)
+#define INTERNAL_AS_WINDOW(intern) ((enum ObWindow*)intern)
+#define PROMPT_AS_WINDOW(prompt) ((enum ObWindow*)prompt)
 
 void window_startup (gboolean reconfig);
 void window_shutdown(gboolean reconfig);
 
-Window          window_top  (ObWindow *self);
-ObStackingLayer window_layer(ObWindow *self);
+Window          window_top  (enum ObWindow *self);
+ObStackingLayer window_layer(enum ObWindow *self);
 
-ObWindow* window_find  (Window xwin);
-void      window_add   (Window *xwin, ObWindow *win);
+enum ObWindow* window_find  (Window xwin);
+void      window_add   (Window *xwin, enum ObWindow *win);
 void      window_remove(Window xwin);
 
 /* Internal openbox-owned windows like the alt-tab popup */
 struct _ObInternalWindow {
-    ObWindowClass type;
+    enum ObWindow type : 3; // 3-bit max value enum 0x000 (ObWindowClass)
     Window window;
 };
 
