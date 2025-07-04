@@ -71,7 +71,7 @@ typedef enum
 
 struct _ObClient
 {
-    enum ObWindow obwin;
+    enum ObWindow obwin : 3; // 3-bit max value enum 0x000 (ObWindowClass)
     Window  window;
     gchar managed;
 

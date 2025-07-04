@@ -65,7 +65,7 @@ struct _ObFocusCyclePopupTarget
 
 struct _ObFocusCyclePopup
 {
-    enum ObWindow obwin;
+    enum ObWindow obwin : 3; // 3-bit max value enum 0x000 (ObWindowClass)
     Window bg;
 
     /* This is used when the popup is in icon mode */
