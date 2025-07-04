@@ -73,23 +73,43 @@ struct _ObClient
 {
     enum ObWindow obwin : 3; // 3-bit max value enum 0x000 (ObWindowClass)
     Window  window;
-    gchar managed;
 
-    /*! If this client is managing an ObPrompt window, then this is set to the
-      prompt */
-    struct _ObPrompt *prompt;
+    /*! The layer in which the window will be stacked, windows in lower layers
+      are always below windows in higher layers. */
+    ObStackingLayer layer : 4; // 4-bit max value 0x0000
 
-    /*! The window's decorations. NULL while the window is being managed! */
-    struct _ObFrame *frame;
+
+#ifdef SYNC
+    /*! The client wants to sync during resizes */
+    gchar sync_request;
+#endif
+
+    /*! Where to place the decorated window in relation to the undecorated
+    window */
+    gshort gravity;
+
+#ifdef SYNC
+    /*! The XSync counter used for synchronizing during resizes */
+    guint32 sync_counter;
+    /*! The value we're waiting for the counter to reach */
+    gulong sync_counter_value;
+#endif
 
     /*! The number of unmap events to ignore on the window */
     gshort ignore_unmaps;
 
-    /*! The id of the group the window belongs to */
-    struct _ObGroup *group;
+    gchar managed;
 
-    /*! Saved session data to apply to this client */
-    struct _ObSessionState *session;
+    /*! True if the client supports the delete_window protocol */
+    gchar delete_window;
+
+    /*! A user option. When this is set to TRUE the client will not ever
+      be decorated.
+    */
+    gchar undecorated;
+
+    /*! A boolean used for algorithms which need to mark clients as visited */
+    gchar visited;
 
     /*! Whether or not the client is a transient window. It may or may not
       have parents when this is true. */
@@ -100,9 +120,26 @@ struct _ObClient
     GSList *parents;
     /*! The clients which are transients (children) of this client */
     GSList *transients;
+
     /*! The desktop on which the window resides (0xffffffff for all
       desktops) */
     guint desktop;
+
+    /*! The PID of the process which owns the window */
+    pid_t pid;
+
+    /*! If this client is managing an ObPrompt window, then this is set to the
+      prompt */
+    struct _ObPrompt *prompt;
+
+    /*! The window's decorations. NULL while the window is being managed! */
+    struct _ObFrame *frame;
+
+    /*! The id of the group the window belongs to */
+    struct _ObGroup *group;
+
+    /*! Saved session data to apply to this client */
+    struct _ObSessionState *session;
 
     /*! The startup id for the startup-notification protocol. This will be
       NULL if a startup id is not set. */
@@ -118,8 +155,6 @@ struct _ObClient
     gchar *client_machine;
     /*! The command used to run the program. Pre-XSMP window identification. */
     gchar *wm_command;
-    /*! The PID of the process which owns the window */
-    pid_t pid;
 
     /*! The application that created the window */
     gchar *name;
@@ -155,6 +190,12 @@ struct _ObClient
     gchar pre_fullscreen_max_horz;
     gchar pre_fullscreen_max_vert;
 
+    /*! Width of the border on the window.
+      The window manager will set this to 0 while the window is being managed,
+      but needs to restore it afterwards, so it is saved here.
+    */
+    gushort border_width;
+
     /*! The window's strut
       The strut defines areas of the screen that are marked off-bounds for
       window placement. In theory, where this window exists.
@@ -168,12 +209,6 @@ struct _ObClient
       being displayed in the terminal, instead of the number of pixels.
     */
     Size logical_size;
-
-    /*! Width of the border on the window.
-      The window manager will set this to 0 while the window is being managed,
-      but needs to restore it afterwards, so it is saved here.
-    */
-    gushort border_width;
 
     /*! The minimum aspect ratio the client window can be sized to.
       A value of 0 means this is ignored.
@@ -203,19 +238,23 @@ struct _ObClient
     /*! Window decoration and functionality hints */
     ObMwmHints mwmhints;
 
+    /*! Can the window receive input focus? */
+    gchar can_focus;
+    /*! Notify the window when it receives focus? */
+    gchar focus_notify;
+
+    /*! Will the client respond to pings? */
+    gchar ping;
+    /*! Indicates if the client is trying to close but has stopped responding
+      to pings */
+    gchar not_responding;
+
     /*! The client's specified colormap */
     Colormap colormap;
-
-    /*! Where to place the decorated window in relation to the undecorated
-      window */
-    gshort gravity;
 
     /*! The state of the window, one of WithdrawnState, IconicState, or
       NormalState */
     glong wmstate;
-
-    /*! True if the client supports the delete_window protocol */
-    gchar delete_window;
 
     /*! Was the window's position requested by the application or the user?
       if by the application, we force it completely onscreen, if by the user
@@ -227,30 +266,11 @@ struct _ObClient
       If by the application we don't let it go outside the available area */
     guint sized;
 
-    /*! Can the window receive input focus? */
-    gchar can_focus;
-    /*! Notify the window when it receives focus? */
-    gchar focus_notify;
-
-    /*! Will the client respond to pings? */
-    gchar ping;
-    /*! Indicates if the client is trying to close but has stopped responding
-      to pings */
-    gchar not_responding;
     /*! A prompt shown when you are trying to close a client that is not
       responding.  It asks if you want to kill the client */
     struct _ObPrompt *kill_prompt;
     /*! We tried to close the window with a SIGTERM */
     gshort kill_level;
-
-#ifdef SYNC
-    /*! The client wants to sync during resizes */
-    gchar sync_request;
-    /*! The XSync counter used for synchronizing during resizes */
-    guint32 sync_counter;
-    /*! The value we're waiting for the counter to reach */
-    gulong sync_counter_value;
-#endif
 
     /*! The window uses shape extension to be non-rectangular? */
     gchar shaped;
@@ -287,20 +307,11 @@ struct _ObClient
     /*! The urgent flag */
     gchar urgent;
 
-    /*! The layer in which the window will be stacked, windows in lower layers
-      are always below windows in higher layers. */
-    ObStackingLayer layer : 4; // 4-bit max value 0x0000
-
     /*! A bitmask of values in the ObFrameDecorations enum
       The values in the variable are the decorations that the client wants to
       be displayed around it.
     */
     guint decorations;
-
-    /*! A user option. When this is set to TRUE the client will not ever
-      be decorated.
-    */
-    gchar undecorated;
 
     /*! A bitmask of values in the ObFunctions enum
       The values in the variable specify the ways in which the user is allowed
@@ -313,9 +324,6 @@ struct _ObClient
 
     /*! Where the window should iconify to/from */
     Rect icon_geometry;
-
-    /*! A boolean used for algorithms which need to mark clients as visited */
-    gchar visited;
 };
 
 extern GList      *client_list;
