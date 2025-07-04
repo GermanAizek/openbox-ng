@@ -36,25 +36,25 @@ typedef struct _ObPagerPopup ObPagerPopup;
 struct _ObPopup
 {
     enum ObWindow obwin : 3; // 3-bit max value enum 0x000 (ObWindowClass)
+    gchar hasicon;
+    gchar mapped;
+    gchar delay_mapped;
+    guint delay_timer;
+
     Window bg;
-
     Window text;
-
-    gboolean hasicon;
     RrAppearance *a_bg;
     RrAppearance *a_text;
-    gint gravity;
-    gint x;
-    gint y;
-    gint textw;
-    gint h;
-    gint minw;
-    gint maxw;
+
+    gshort gravity;
+    gshort x;
+    gshort y;
+    gshort textw;
+    gshort h;
+    gshort minw;
+    gshort maxw;
     guint iconwm; /* icon width multiplier. multiplied by the normal width */
     guint iconhm; /* icon height multiplier. multipled by the normal height */
-    gboolean mapped;
-    gboolean delay_mapped;
-    guint delay_timer;
 
     void (*draw_icon)(gint x, gint y, gint w, gint h, gpointer data);
     gpointer draw_icon_data;
