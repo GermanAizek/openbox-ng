@@ -26,8 +26,8 @@ typedef struct {
 } RrSize;
 
 typedef struct {
-    int x;
-    int y;
+    short x;
+    short y;
     int width;
     int height;
 } RrRect;
