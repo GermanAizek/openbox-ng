@@ -123,30 +123,30 @@ typedef enum {
 } RrFontSlant;
 
 struct _RrSurface {
-    RrSurfaceColorType grad;
-    RrReliefType relief;
-    RrBevelType bevel;
+    RrSurfaceColorType grad : 4; // 4-bit max value enum 0x0000
+    RrReliefType relief : 3; // 3-bit max value enum 0x000
+    RrBevelType bevel : 2; // 2-bit max value enum 0x00
     RrColor *primary;
     RrColor *secondary;
     RrColor *border_color;
     RrColor *bevel_dark;
     RrColor *bevel_light;
     RrColor *interlace_color;
-    gboolean interlaced;
-    gboolean border;
     RrAppearance *parent;
-    gint parentx;
-    gint parenty;
+    gshort parentx;
+    gshort parenty;
+    gchar interlaced;
+    gchar border;
+    guchar bevel_dark_adjust;  /* 0-255, default is 64 */
+    guchar bevel_light_adjust; /* 0-255, default is 128 */
     RrPixel32 *pixel_data;
-    gint bevel_dark_adjust;  /* 0-255, default is 64 */
-    gint bevel_light_adjust; /* 0-255, default is 128 */
     RrColor *split_primary;
     RrColor *split_secondary;
 };
 
 struct _RrTextureText {
     RrFont *font;
-    RrJustify justify;
+    RrJustify justify : 2; // 2-bit max value enum 0x00
     RrColor *color;
     const gchar *string;
     gint shadow_offset_x;
@@ -154,7 +154,7 @@ struct _RrTextureText {
     RrColor *shadow_color;
     gboolean shortcut; /*!< Underline a character */
     guint shortcut_pos; /*!< Position in bytes of the character to underline */
-    RrEllipsizeMode ellipsize;
+    RrEllipsizeMode ellipsize : 4; // 4-bit max value enum 0x0000
     gboolean flow; /* allow multiple lines.  must set maxwidth below */
     gint maxwidth;
     guchar shadow_alpha; /* at the bottom to improve alignment */
@@ -216,7 +216,7 @@ union _RrTextureData {
 struct _RrTexture {
     /* If changing the type of a texture, you should DEFINITELY call
        RrAppearanceClearTextures() first! */
-    RrTextureType type;
+    RrTextureType type : 3; // 3-bit max value enum 0x000
     RrTextureData data;
 };
 
