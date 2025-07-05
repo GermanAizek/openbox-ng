@@ -25,12 +25,12 @@
 
 struct _RrFont {
     const RrInstance *inst;
-    gint ref;
+    gshort ref;
+    gshort ascent; /*!< The font's ascent in pango-units */
+    gshort descent; /*!< The font's descent in pango-units */
     PangoFontDescription *font_desc;
     PangoLayout *layout; /*!< Used for measuring and rendering strings */
     PangoAttribute *shortcut_underline; /*< For underlining the shortcut key */
-    gint ascent; /*!< The font's ascent in pango-units */
-    gint descent; /*!< The font's descent in pango-units */
 };
 
 void RrFontDraw(XftDraw *d, RrTextureText *t, RrRect *position);
