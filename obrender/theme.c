@@ -49,7 +49,7 @@ struct fallbacks {
 };
 
 static XrmDatabase loaddb(const gchar *name, gchar **path);
-static gboolean read_int(XrmDatabase db, const gchar *rname, gint *value);
+static gboolean read_int(XrmDatabase db, const gchar *rname, gshort *value);
 static gboolean read_string(XrmDatabase db, const gchar *rname, gchar **value);
 static gboolean read_color(XrmDatabase db, const RrInstance *inst,
                            const gchar *rname, RrColor **value);
@@ -134,12 +134,13 @@ RrTheme* RrThemeNew(const RrInstance *inst, const gchar *name,
                     guint min_label_height)
 {
     XrmDatabase db = NULL;
-    RrJustify winjust, mtitlejust;
+    RrJustify winjust;
+    RrJustify mtitlejust;
     gchar *str;
     RrTheme *theme;
     RrFont *default_font = NULL;
     gchar *path;
-    gint menu_overlap = 0;
+    gshort menu_overlap = 0;
     struct fallbacks fbs;
 
     if (name) {
@@ -1174,7 +1175,7 @@ static gchar *create_class_name(const gchar *rname)
     return rclass;
 }
 
-static gboolean read_int(XrmDatabase db, const gchar *rname, gint *value)
+static gboolean read_int(XrmDatabase db, const gchar *rname, gshort *value)
 {
     gboolean ret = FALSE;
     gchar *rclass = create_class_name(rname);
@@ -1258,7 +1259,7 @@ static gboolean read_mask(const RrInstance *inst, const gchar *path,
 
 static void parse_appearance(gchar *tex, RrSurfaceColorType *grad,
                              RrReliefType *relief, RrBevelType *bevel,
-                             gboolean *interlaced, gboolean *border,
+                             gchar *interlaced, gchar *border,
                              gboolean allow_trans)
 {
     gchar *t;
@@ -1327,7 +1328,7 @@ static gboolean read_appearance(XrmDatabase db, const RrInstance *inst,
     gchar *csplitname, *ctosplitname;
     gchar *rettype;
     XrmValue retvalue;
-    gint i;
+    gshort i;
 
     cname = g_strconcat(rname, ".color", NULL);
     ctoname = g_strconcat(rname, ".colorTo", NULL);

@@ -38,30 +38,30 @@ struct _RrTheme {
     RrFont *osd_font_unhilite;
 
     /* style settings - geometry */
-    gint paddingx;
-    gint paddingy;
-    gint handle_height;
-    gint fbwidth; /*!< frame border width */
-    gint mbwidth; /*!< menu border width */
-    gint obwidth; /*!< osd border width */
-    gint ubwidth; /*!< undecorated frame border width */
-    gint cbwidthx;
-    gint cbwidthy;
-    gint menu_overlap_x;
-    gint menu_overlap_y;
-    gint menu_sep_width;
-    gint menu_sep_paddingx;
-    gint menu_sep_paddingy;
+    gshort paddingx;
+    gshort paddingy;
+    gshort handle_height;
+    gshort fbwidth; /*!< frame border width */
+    gshort mbwidth; /*!< menu border width */
+    gshort obwidth; /*!< osd border width */
+    gshort ubwidth; /*!< undecorated frame border width */
+    gshort cbwidthx;
+    gshort cbwidthy;
+    gshort menu_overlap_x;
+    gshort menu_overlap_y;
+    gshort menu_sep_width;
+    gshort menu_sep_paddingx;
+    gshort menu_sep_paddingy;
     /* these ones are calculated, not set directly by the theme file */
-    gint win_font_height;
-    gint menu_title_font_height;
-    gint menu_font_height;
-    gint label_height;
-    gint title_height;
-    gint button_size;
-    gint grip_width;
-    gint menu_title_label_height;
-    gint menu_title_height;
+    gshort win_font_height;
+    gshort menu_title_font_height;
+    gshort menu_font_height;
+    gshort label_height;
+    gshort title_height;
+    gshort button_size;
+    gshort grip_width;
+    gshort menu_title_label_height;
+    gshort menu_title_height;
 
     /* style settings - colors */
     RrColor *menu_border_color;
@@ -99,15 +99,22 @@ struct _RrTheme {
     RrColor *menu_disabled_color;
     RrColor *menu_disabled_selected_color;
     RrColor *title_focused_shadow_color;
-    gchar    title_focused_shadow_alpha;
     RrColor *title_unfocused_shadow_color;
+
+    /* style settings - pics */
+    RrPixel32 *def_win_icon; /* RGBA */
+    gshort       def_win_icon_w;
+    gshort       def_win_icon_h;
+
+    gchar    title_focused_shadow_alpha;
     gchar    title_unfocused_shadow_alpha;
+    gchar    osd_text_active_shadow_alpha;
+    gchar    osd_text_inactive_shadow_alpha;
+
     RrColor *osd_text_active_color;
     RrColor *osd_text_inactive_color;
     RrColor *osd_text_active_shadow_color;
     RrColor *osd_text_inactive_shadow_color;
-    gchar    osd_text_active_shadow_alpha;
-    gchar    osd_text_inactive_shadow_alpha;
     RrColor *osd_pressed_color;
     RrColor *osd_unpressed_color;
     RrColor *osd_focused_color;
@@ -115,11 +122,6 @@ struct _RrTheme {
     RrColor *osd_focused_lineart;
     RrColor *menu_title_shadow_color;
     RrColor *menu_text_shadow_color;
-
-    /* style settings - pics */
-    RrPixel32 *def_win_icon; /* RGBA */
-    gint       def_win_icon_w;
-    gint       def_win_icon_h;
 
     /* style settings - masks */
     RrPixmapMask *menu_bullet_mask; /* submenu pointer */
