@@ -29,17 +29,17 @@
 struct _RrColor {
     const RrInstance *inst;
 
-    gint r;
-    gint g;
-    gint b;
     gulong pixel;
     GC gc;
+    gshort r;
+    gshort g;
+    gshort b;
 
-    gint key;
-    gint refcount;
+    gshort key;
+    gshort refcount;
 
 #ifdef DEBUG
-    gint id;
+    gshort id;
 #endif
 };
 
