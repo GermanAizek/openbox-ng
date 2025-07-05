@@ -83,53 +83,108 @@ void RrImageCacheUnref(RrImageCache *self)
   c ^= b; c -= rot(b,24); \
 }
 
-/* This is a fast, reversable hash function called "lookup3", found here:
-   http://burtleburtle.net/bob/c/lookup3.c, by Bob Jenkins
+/* This is a fast hash function called "CityHash", found here:
+   https://github.com/google/cityhash, by Google
 
-   This hashing algorithm is "reversible", that is, not cryptographically
-   secure at all.  But we don't care about that, we just want something to
-   tell when images are the same or different relatively quickly.
+   We use a 64-bit hash for better distribution and fewer collisions.
 */
-guint32 hashword(const guint32 *key, gint length, guint32 initval)
+
+static G_GNUC_UNUSED guint64
+UNALIGNED_LOAD64 (const gchar *p)
 {
-    guint32 a,b,c;
+  guint64 result;
+  memcpy (&result, p, sizeof (result));
+  return result;
+}
 
-    /* Set up the internal state */
-    a = b = c = 0xdeadbeef + (((guint32)length)<<2) + initval;
+static G_GNUC_UNUSED guint32
+UNALIGNED_LOAD32 (const gchar *p)
+{
+  guint32 result;
+  memcpy (&result, p, sizeof (result));
+  return result;
+}
 
-    /* handle most of the key */
-    while (length > 3)
+static G_GNUC_UNUSED guint64
+Rotate (guint64 val, int shift)
+{
+  return shift == 0 ? val : (val >> shift) | (val << (64 - shift));
+}
+
+static G_GNUC_UNUSED guint64
+ShiftMix (guint64 val)
+{
+  return val ^ (val >> 47);
+}
+
+static G_GNUC_UNUSED guint64
+Hash128to64 (const guint64 u, const guint64 v)
+{
+  /* Murmur-inspired hashing. */
+  const guint64 kMul = 0x9ddfea08eb382d69ULL;
+  guint64 a = (u ^ v) * kMul;
+  a ^= (a >> 47);
+  guint64 b = (v ^ a) * kMul;
+  b ^= (b >> 47);
+  b *= kMul;
+  return b;
+}
+
+static G_GNUC_UNUSED guint64
+CityHash64 (const gchar *s, gsize len)
+{
+  const guint64 k0 = 0xc3a5c85c97cb3127ULL;
+  const guint64 k1 = 0xb492b66fbe98f273ULL;
+  const guint64 k2 = 0x9ae16a3b2f90404fULL;
+  const gchar *p = s;
+  const gchar *end = s + len;
+  guint64 h = k2 + len;
+
+  if (len >= 16)
     {
-        a += key[0];
-        b += key[1];
-        c += key[2];
-        mix(a,b,c);
-        length -= 3;
-        key += 3;
+      guint64 v = UNALIGNED_LOAD64 (p + 8) + k1;
+      guint64 w = UNALIGNED_LOAD64 (p) + k0;
+      h ^= v;
+      h = Rotate (h, 19);
+      h = h * k0 + k2;
+      h ^= w;
+      h = Rotate (h, 18);
+      h = h * k1 + k2;
+
+      while (p + 16 <= end)
+        {
+          guint64 x = UNALIGNED_LOAD64 (p);
+          guint64 y = UNALIGNED_LOAD64 (p + 8);
+          h += x;
+          v += y + x;
+          w += x;
+          v = Rotate (v, 32);
+          h = Rotate (h, 19);
+          h = h * k0 + k2;
+          p += 16;
+        }
     }
 
-    /* handle the last 3 guint32's */
-    switch(length)      /* all the case statements fall through */
-    { 
-    case 3: c+=key[2];
-    case 2: b+=key[1];
-    case 1: a+=key[0];
-        final(a,b,c);
-    case 0:             /* case 0: nothing left to add */
-        break;
+  if (len > 0)
+    {
+      h ^= UNALIGNED_LOAD64 (p);
+      h = Rotate (h, 47) * k0;
     }
-    /* report the result */
-    return c;
+
+  h = ShiftMix (h);
+  h *= k0;
+  h = ShiftMix (h);
+  return h;
 }
 
 /*! This is some arbitrary initial value for the hashing function.  It's
   constant so that you get the same result from the same data each time.
 */
-#define HASH_INITVAL 0xf00d
 
 guint RrImagePicHash(const RrImagePic *p)
 {
-    return hashword(p->data, p->width * p->height, HASH_INITVAL);
+    return (guint) CityHash64 ((const gchar *) p->data,
+                               p->width * p->height * sizeof (RrPixel32));
 }
 
 static gboolean RrImagePicEqual(const RrImagePic *p1,
